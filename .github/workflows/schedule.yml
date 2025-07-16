@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Echo context to file
         run: |
-          echo '${{ github.event.schedule }}' | jq > scheduled_action_context.json
+          echo '${{ github }}' | jq > scheduled_action_context.json
 
       - name: Display context
         run: cat ./scheduled_action_context.json
