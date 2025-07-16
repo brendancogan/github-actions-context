@@ -2,7 +2,7 @@ name: Scheduled Action Context Example
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/6 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Echo context to file
         run: |
-          echo '${{ github }}' | jq > scheduled_action_context.json
+          echo '${{ github.event }}' | jq > scheduled_action_context.json
 
       - name: Display context
         run: cat ./scheduled_action_context.json
