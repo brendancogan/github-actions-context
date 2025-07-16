@@ -2,7 +2,7 @@ name: Scheduled Action Context Example
 
 on:
   schedule:
-    - cron: '*/6 * * * *'
+    - cron: "31 * * * *"
   workflow_dispatch:
 
 jobs:
