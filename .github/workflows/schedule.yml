@@ -1,0 +1,19 @@
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  test_schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install jq
+        uses: dcarbone/install-jq-action@v3.2.0
+
+      - name: Echo context to file
+        shell: bash
+        run: echo ${{ github.event.schedule }} | jq > scheduled_action_context.json
+
+      - name: Display context
+        run: cat scheduled_action_context.json
+
