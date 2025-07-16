@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo context to file
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
-          echo '${{ github.event }}' | jq > scheduled_action_context.json
+          echo '${{ env.GITHUB_CONTEXT }}' | jq | tee scheduled_action_context.json
 
       - name: Display context
         run: cat ./scheduled_action_context.json
