@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  scheduled:
-    name: Scheduled
+  schedule:
+    name: "on.${{ github.event_name }}"
     runs-on: ubuntu-latest
     steps:
       - name: Echo context to file
