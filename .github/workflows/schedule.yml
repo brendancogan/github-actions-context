@@ -6,15 +6,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  test_schedule:
+  scheduled:
+    name: Scheduled
     runs-on: ubuntu-latest
     steps:
       - name: Echo context to file
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
-          printenv --version
           printenv GITHUB_CONTEXT > scheduled_action_context.json
-
-      - name: Display context
-        run: cat ./scheduled_action_context.json
+          echo '# Scheduled Action Context' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          printenv GITHUB_CONTEXT >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
