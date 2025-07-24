@@ -1,8 +1,8 @@
-name: Scheduled Action Context Example
+name: Scheduled Action
 
 on:
   schedule:
-    - cron: "17 4 * * *"
+    - cron: "17 4 * * *" # 4:17 AM UTC every day
   workflow_dispatch:
 
 jobs:
@@ -11,11 +11,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo context to file
+        if: ${{ github.event_name != 'workflow_dispatch' }}
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
-          printenv GITHUB_CONTEXT > scheduled_action_context.json
           echo '# Scheduled Action Context' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          printenv GITHUB_CONTEXT >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Manual test
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: |
+          echo '# Manual test' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '> [!IMPORTANT]' >> $GITHUB_STEP_SUMMARY
+          echo '> This workflow run was manually triggered for testing and _does not_ represent the `on.schedule` event context. >> $GITHUB_STEP_SUMMARY
           echo '' >> $GITHUB_STEP_SUMMARY
           echo '```json' >> $GITHUB_STEP_SUMMARY
           printenv GITHUB_CONTEXT >> $GITHUB_STEP_SUMMARY
