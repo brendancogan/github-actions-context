@@ -29,7 +29,7 @@ jobs:
           echo '# Manual test' >> $GITHUB_STEP_SUMMARY
           echo '' >> $GITHUB_STEP_SUMMARY
           echo '> [!IMPORTANT]' >> $GITHUB_STEP_SUMMARY
-          echo '> This workflow run was manually triggered for testing and _does not_ represent the `on.schedule` event context. >> $GITHUB_STEP_SUMMARY
+          echo '> This workflow run was manually triggered for testing and _does not_ represent the `on.schedule` event context.' >> $GITHUB_STEP_SUMMARY
           echo '' >> $GITHUB_STEP_SUMMARY
           echo '```json' >> $GITHUB_STEP_SUMMARY
           printenv GITHUB_CONTEXT >> $GITHUB_STEP_SUMMARY
