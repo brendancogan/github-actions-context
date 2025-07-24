@@ -13,6 +13,7 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
+          printenv --version
           printenv GITHUB_CONTEXT > tee scheduled_action_context.json
 
       - name: Display context
