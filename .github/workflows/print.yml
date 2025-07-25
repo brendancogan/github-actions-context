@@ -1,0 +1,34 @@
+on:
+  workflow_call:
+    # inputs:
+    #   caller_event_name:
+    #     description: 'The name of the event that triggered the workflow.'
+    #     required: true
+    #     type: string
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_CONTEXT: ${{ toJSON(github) }}
+    steps:
+      - name: Print context to Step Summary
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        run: |
+          echo '# `on.${{ github.event_name }}` Action Context' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          printenv GITHUB_CONTEXT >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Manual test
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo '# Manual test' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '> [!IMPORTANT]' >> $GITHUB_STEP_SUMMARY
+          echo '> This workflow run was manually triggered for testing and _does not_ represent the `on.schedule` event context.' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          printenv GITHUB_CONTEXT >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

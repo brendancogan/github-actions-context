@@ -7,37 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  reuseable_test:
-    name: "on.${{ github.event_name }}"
-    uses: brendancogan/github-actions-context/.github/workflows/print_context.yml@main
-    with:
-      caller_event_name: ${{ github.event_name }}
-
   schedule:
     name: "on.${{ github.event_name }}"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo context to file
-        if: ${{ github.event_name != 'workflow_dispatch' }}
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: |
-          echo '# Scheduled Action Context' >> $GITHUB_STEP_SUMMARY
-          echo '' >> $GITHUB_STEP_SUMMARY
-          echo '```json' >> $GITHUB_STEP_SUMMARY
-          printenv GITHUB_CONTEXT >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+    uses: brendancogan/github-actions-context/.github/workflows/print.yml@main
 
-      - name: Manual test
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: |
-          echo '# Manual test' >> $GITHUB_STEP_SUMMARY
-          echo '' >> $GITHUB_STEP_SUMMARY
-          echo '> [!IMPORTANT]' >> $GITHUB_STEP_SUMMARY
-          echo '> This workflow run was manually triggered for testing and _does not_ represent the `on.schedule` event context.' >> $GITHUB_STEP_SUMMARY
-          echo '' >> $GITHUB_STEP_SUMMARY
-          echo '```json' >> $GITHUB_STEP_SUMMARY
-          printenv GITHUB_CONTEXT >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+  schedule2:
+    name: "on.${{ github.event_name }}"
+    uses: brendancogan/github-actions-context/.github/workflows/print_context.yml@main
