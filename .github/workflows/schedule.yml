@@ -14,3 +14,5 @@ jobs:
   schedule2:
     name: "on.${{ github.event_name }}"
     uses: brendancogan/github-actions-context/.github/workflows/print_context.yml@main
+    with:
+      caller_event_name: ${{ github.event_name }}
